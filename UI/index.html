@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>TS Fetch + Google Charts</title>
+    <link rel='stylesheet' type='text/css' href='src/style.css'>
+</head>
+<body>
+<div class='container'>
+    <div class='item'>
+        <div class='chart' id="Chart1"></div>
+        <div class='label-cont'>
+            <label id="output1" class="label"></label>
+        </div>
+    </div>
+    <div class='item'>
+        <div class='chart' id="Chart2"></div>
+        <div class='label-cont'>
+            <label id="output2" class="label"></label>
+        </div>
+    </div>
+    <div class='item'>
+        <div class='chart' id="Chart3"></div>
+        <div class='label-cont'>
+            <label id="output3" class="label"></label>
+        </div>
+    </div>
+</div>
+
+<div id="cont1" style="justify-content: center;">
+    <input id="input1" placeholder="Number of hours" class="input" name="text" type="number">
+    <button class="btn" id="btn2">Try</button>
+</div>
+
+<div id="cont2">
+    <label id="label1" class="label"></label>
+    <label id="label2" class="label"></label>
+    <label id="label3" class="label"></label>
+</div>
+
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="module">
+    import { avgEnergyMix, bestInterval } from '/src/main.ts';
+
+    const output1 = document.getElementById('output1');
+    const output2 = document.getElementById('output2');
+    const output3 = document.getElementById('output3');
+    const btn2 = document.getElementById('btn2');
+    const label1 = document.getElementById('label1');
+    const label2 = document.getElementById('label2');
+    const label3 = document.getElementById('label3');
+    const input1 = document.getElementById('input1');
+
+    google.charts.load('current', { packages: ['corechart'] });
+
+    async function drawChartWithData() {
+        try {
+            const arr = await avgEnergyMix();
+            let table = [];
+            let options = [];
+            for (let i = 0; i < 3; i++) {
+                options.push({
+                    title: `${arr[i].from.substring(0, 10)} - ${arr[i].to.substring(0, 10)}`,
+                    legend: { position: 'none' },
+                    colors : [
+                        '#97e00e',
+                        '#3a3433',
+                        '#6ed9ec',
+                        '#afacaa',
+                        '#f6c7b6',
+                        '#6c3111',
+                        '#ffdb00',
+                        '#9f27f3',
+                        '#0d9bac'
+                    ],
+                    pieHole: 0.4,
+                })
+                const d = arr[i].data;
+                table.push([
+                    ['Component', 'Value'],
+                    ['biomass', d.biomass],
+                    ['other', d.other],
+                    ['hydro', d.hydro],
+                    ['imports', d.imports],
+                    ['gas', d.gas],
+                    ['coal', d.coal],
+                    ['solar', d.solar],
+                    ['nuclear', d.nuclear],
+                    ['wind', d.wind]
+                ]);
+            }
+
+            const dataTable1 = google.visualization.arrayToDataTable(table[0]);
+            const dataTable2 = google.visualization.arrayToDataTable(table[1]);
+            const dataTable3 = google.visualization.arrayToDataTable(table[2]);
+
+            const chart1 = new google.visualization.PieChart(document.getElementById('Chart1'));
+            chart1.draw(dataTable1, options[0]);
+            output1.textContent = arr[0]["clean energy percent"].toFixed(2) + "%";
+            const chart2 = new google.visualization.PieChart(document.getElementById('Chart2'));
+            chart2.draw(dataTable2, options[1]);
+            output2.textContent = arr[1]["clean energy percent"].toFixed(2) + "%";
+            const chart3 = new google.visualization.PieChart(document.getElementById('Chart3'));
+            chart3.draw(dataTable3, options[2]);
+            output3.textContent = arr[2]["clean energy percent"].toFixed(2) + "%";
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function getAnsewer() {
+        try {
+            const val = Number(input1.value);
+            if (val < 1 || val > 6) {
+                alert('Not valid input');
+                return;
+            }
+            const res = await bestInterval(val);
+            label1.textContent = res.from;
+            label2.textContent = res.to;
+            label3.textContent = res["clean energy percent"].toFixed(2) + "%";
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
+    google.charts.setOnLoadCallback(() => {
+        void drawChartWithData();
+    });
+
+    label1.textContent = "From date";
+    label2.textContent = "To date";
+    label3.textContent = "Clean energy percent";
+
+    btn2?.addEventListener('click', () => {
+        void getAnsewer();
+    })
+</script>
+</body>
+</html>

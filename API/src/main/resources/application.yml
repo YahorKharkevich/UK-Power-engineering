@@ -1,0 +1,4 @@
+external:
+  api:
+    base-url: https://api.carbonintensity.org.uk/generation/{from}/{to}
+    timeout-ms: 2000
