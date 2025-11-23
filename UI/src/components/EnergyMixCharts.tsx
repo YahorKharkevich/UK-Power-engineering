@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import { Chart } from 'react-google-charts';
 import { avgEnergyMix, Entry } from '../api';
 
@@ -11,14 +11,14 @@ const EnergyMixCharts: React.FC = () => {
                 const result = await avgEnergyMix();
                 setData(result);
             } catch (error) {
-                console.error("Error fetching energy mix data:", error);
+                alert("Error fetching energy mix data!");
             }
         };
         fetchData();
     }, []);
 
     if (data.length === 0) {
-        return <div>Loading charts...</div>;
+        return <div className='Loading'>Loading...</div>;
     }
 
     const colors = [
@@ -43,8 +43,9 @@ const EnergyMixCharts: React.FC = () => {
                 ];
 
                 const options = {
-                    title: `${entry.from.substring(0, 10)} - ${entry.to.substring(0, 10)}`,
-                    legend: { position: 'none' },
+                    title: `${index === 0 ? "Today" : index === 1 ? "Tomorrow" : "The day after Tomorrow"} `,
+                    titleFontSize: 15,
+                    legend: { position: 'bottom' },
                     colors: colors,
                     pieHole: 0.4,
                 };
@@ -61,6 +62,7 @@ const EnergyMixCharts: React.FC = () => {
                             />
                         </div>
                         <div className='label-cont'>
+                            <h4>Clean energy percent:</h4>
                             <label className="label">
                                 {entry["clean energy percent"].toFixed(2)}%
                             </label>
