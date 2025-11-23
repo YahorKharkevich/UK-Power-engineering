@@ -24,7 +24,7 @@ export interface Data {
 }
 
 export async function avgEnergyMix(): Promise<Entry[]> {
-    const url = 'http://localhost:8081/api/v1/avgEnergyMix';
+    const url = '/api/v1/avgEnergyMix';
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
     try {
@@ -38,7 +38,7 @@ export async function avgEnergyMix(): Promise<Entry[]> {
 }
 
 export async function bestInterval(val: number): Promise<Data> {
-    const url = 'http://localhost:8081/api/v1/bestInterval';
+    const url = '/api/v1/bestInterval';
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
     try {
