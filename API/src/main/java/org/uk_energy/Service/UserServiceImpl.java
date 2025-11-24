@@ -23,17 +23,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object getAvgEnergyMix() {
-        //Data
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         ZonedDateTime threeDaysLaterUtc = nowUtc.plusDays(3);
         DateTimeFormatter frmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'00:01'Z'");
         String from = frmt.format(nowUtc);
         String to = frmt.format(threeDaysLaterUtc);
 
-        //Request
         ExternalApiData data = (ExternalApiData) externalApiService.getData(from, to);
 
-        //Computing result
         List<Map<String, Object>> res = new ArrayList<>();
         ZonedDateTime date = nowUtc.withHour(0).withMinute(0).withSecond(0).minusNanos(0).withNano(0);
         for (int i = 0; i < 3; ++i) {
@@ -48,7 +45,8 @@ public class UserServiceImpl implements UserService {
         if (duration <= 0 || duration > 6) throw new IllegalArgumentException("Invalid interval duration!");
 
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
-        nowUtc = nowUtc.withMinute(0).withSecond(0).minusNanos(0).withNano(0);
+        nowUtc = nowUtc.withSecond(0).minusNanos(0).withNano(0);
+        nowUtc.plusMinutes(30 - nowUtc.getMinute()%30);
         ZonedDateTime twoDaysLaterUtc = nowUtc.plusDays(2);
         DateTimeFormatter frmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:01'Z'");
         String from = frmt.format(nowUtc);
