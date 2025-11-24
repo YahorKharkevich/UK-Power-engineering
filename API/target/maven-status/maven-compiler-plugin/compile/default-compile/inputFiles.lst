@@ -1,0 +1,9 @@
+/app/src/main/java/org/uk_energy/Controller/UserController.java
+/app/src/main/java/org/uk_energy/ExceptionHandler/GlobalExceptionHandler.java
+/app/src/main/java/org/uk_energy/ExternalApiController/ExternalApiData.java
+/app/src/main/java/org/uk_energy/ExternalApiController/ExternalApiProperties.java
+/app/src/main/java/org/uk_energy/ExternalApiController/ExternalApiService.java
+/app/src/main/java/org/uk_energy/ExternalApiController/ExternalApiServiceImpl.java
+/app/src/main/java/org/uk_energy/Service/UserService.java
+/app/src/main/java/org/uk_energy/Service/UserServiceImpl.java
+/app/src/main/java/org/uk_energy/UkEnergyApplication.java
