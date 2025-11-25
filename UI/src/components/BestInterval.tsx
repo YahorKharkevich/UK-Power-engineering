@@ -19,6 +19,15 @@ const BestInterval: React.FC = () => {
         try {
             setError(null);
             const res = await bestInterval(val);
+
+            const convert = (value) => `${Math.floor(value.getHours()/10)}${value.getHours()%10}:${Math.floor(value.getMinutes()/10)}${value.getMinutes()%10} ${value.getDate()}.${value.getMonth()+1}.${value.getFullYear()}`;
+
+            const oldFrom = new Date(res.from);
+            res.from = convert(oldFrom)
+
+            const oldTo = new Date(res.to);
+            res.to = convert(oldTo)
+
             setResult(res);
         } catch (err) {
             setError("Failed to fetch data");

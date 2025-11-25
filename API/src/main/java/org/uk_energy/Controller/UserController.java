@@ -24,6 +24,7 @@ public class UserController {
 
     @GetMapping("/bestInterval")
     public Object getBestInterval(@RequestParam int duration) {
-        return userService.getBestInterval(duration);
+        Object res = userService.getBestInterval(duration);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 }

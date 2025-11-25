@@ -22,8 +22,15 @@ const EnergyMixCharts: React.FC = () => {
     }
 
     const colors = [
-        '#c701ff', '#4ecb8d', '#008dff', '#0d9bac', '#ff73b6',
-        '#ff9d3a', '#f9e858', '#d83034', '#003a7d'
+        '#00b0be',
+        '#ffcd8e',
+        '#ff8ca1',
+        '#98c127',
+        '#ffcd8e',
+        '#ffb255',
+        '#8fd7d7',
+        '#bdd373',
+        '#f45f74',
     ];
 
     return (

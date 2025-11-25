@@ -9,6 +9,11 @@ import org.springframework.web.client.RestTemplate;
 public class ExternalApiServiceImpl implements ExternalApiService {
     private String baseUrl;
     private int timeoutMs;
+    private final RestTemplate restTemplate;
+
+    public ExternalApiServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -16,7 +21,6 @@ public class ExternalApiServiceImpl implements ExternalApiService {
 
     @Override
     public ExternalApiData getData(String from, String to) {
-        RestTemplate restTemplate = new RestTemplate();
         ExternalApiData data = restTemplate.getForObject(baseUrl, ExternalApiData.class, from, to);
         return data;
     }
