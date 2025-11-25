@@ -1,7 +1,6 @@
 # UK Power Engineering
 
-This is a web-application that shows the best interval for energy consumption in the UK. It uses this public API: https://carbon-
-intensity.github.io.
+This is a web-application that shows the best interval for energy consumption in the UK. It uses this public API: https://carbon-intensity.github.io.
 
 The backend is written in Java + Spring Boot and the frontend is written in React + Vite.
 
