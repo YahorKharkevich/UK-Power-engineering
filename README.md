@@ -1,5 +1,7 @@
 # UK Power Engineering
 
+The website is deployed and accessible at https://uk-power-engineering.onrender.com.
+
 This is a web-application that shows the best interval for energy consumption in the UK. It uses this public API: https://carbon-intensity.github.io/api-definitions/?shell#get-generation-from-to
 
 The backend is written in Java + Spring Boot and the frontend is written in React + Vite.
