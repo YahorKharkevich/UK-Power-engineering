@@ -12,7 +12,7 @@ const BestInterval: React.FC = () => {
 
     const handleCalculate = async () => {
         const val = Number(duration);
-        if (val < 1 || val > 6) {
+        if (val < 1 || val > 6 || val != Math.floor(val)) {
             alert('Not valid input');
             return;
         }
@@ -41,8 +41,10 @@ const BestInterval: React.FC = () => {
                     id="input1"
                     placeholder="Number of hours"
                     className="input"
-                    name="text"
                     type="number"
+                    min="1"
+                    max="6"
+                    step="1"
                     value={duration}
                     onChange={handleChange}
                 />
